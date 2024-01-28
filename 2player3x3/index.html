@@ -3,9 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Крестики-нолики</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>3x3 2</h1>
+    <div> 
+        <h1>Крестики-нолики</h1>
+        <p>(игра 3x3 на 2-ух игроков)</p>
+        <div id="area"></div>
+
+        <div class="player">
+            <span>Сейчас ходит: <span id="curPlyr" class="player-x">X</span></span>
+        </div>
+
+        <h2>Рейтинг:</h2>  
+        <div class="stat">
+            <div class="table">
+                <div class="First">
+                    <div>X</div>
+                    <div>0</div>
+                    <div>Ничья</div>
+                </div>
+                <div class="Second">
+                    <div><td><span id="sX">0</span></td></div>
+                    <div><td><span id="sO">0</span></td></div>
+                    <div><td><span id="sD">0</span></td></div>
+                </div>
+        </div> 
+        <div class="popup" id="popup">
+            <div class="message"></div>
+            <button class="button" onclick="closePopup()">OK</button>
+        </div>
+        <div class="error-popup" id="error-popup">
+            <div class="message"></div>
+            <button class="button" onclick="closeErrorPopup()">OK</button>
+        </div> 
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
