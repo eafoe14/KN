@@ -449,155 +449,8 @@ for(var i = 1; i <= 100; i++) {
 for (var i = 0; i< cell.length; i++) {
     cell[i].addEventListener('click', cellClick, false);
 }
-
 closeErrorPopup();
 closePopup(); 
-
-function cellClick() {
-    var data = [];
-
-    var isActive = this.classList.contains('active');
-
-    if (!this.innerHTML) {
-        if (player === 'x') {
-            this.classList.remove('zero');
-            this.classList.add('cross');
-        } else if (player === 'o') {
-            this.classList.remove('cross');
-            this.classList.add('zero');
-        }
-        this.innerHTML = player;
-
-        if (!isActive) {
-            this.classList.add('active');
-        }
-        } else {
-            var errorPopup = document.getElementById('error-popup');
-            var errorMessage = errorPopup.querySelector('.message');
-            errorMessage.innerHTML = 'Ячейка занята';
-            errorPopup.style.display = 'block';
-            return;
-        }
-
-    for(var i in cell){
-        if(cell[i].innerHTML == player){
-            data.push(parseInt(cell[i].getAttribute('pos')));
-        }
-    }
-
-    if(checkWin(data)) {
-        stat[player] += 1;
-        restart("Выйграл: " + player);
-    }else {
-        var draw = true;
-        for(var i in cell) {
-            if(cell[i].innerHTML == '') draw = false;
-        }
-        if(draw) {
-            stat.d += 1;
-            restart("Ничья");
-        }
-    }
-
-    if(checkWinKvadrat(data)) {
-        stat[player] += 2;
-        restart("Собран квадрат. + 2 балла. Выйграл: " + player);
-    }else {
-        var draw = true;
-        for(var i in cell) {
-            if(cell[i].innerHTML == '') draw = false;
-        }
-        if(draw) {
-            stat.d += 1;
-            restart("Ничья");
-        }
-    }
-
-    
-    if(checkWinAlmaz(data)) {
-        stat[player] +=4;
-        restart("Собран алмаз. + 4 балла. Выйграл: " + player);
-    }else {
-        var draw = true;
-        for(var i in cell) {
-            if(cell[i].innerHTML == '') draw = false;
-        }
-        if(draw) {
-            stat.d += 1;
-            restart("Ничья");
-        }
-    }
-    player = player == "x" ? "o" : "x";
-    currentPlayer.innerHTML = player.toUpperCase();
-    currentPlayer.className = "player-" + player;
-}
-
-function checkWin(data) {
-    for(var i in winIndex) {
-        var win = true;
-        for(var j in winIndex[i]) {
-            var id = winIndex[i][j];
-            var ind = data.indexOf(id);
-
-            if(ind == -1) {
-                win = false
-            }
-        }
-
-        if(win) return true;
-    }
-    return false;
-}
-
-function checkWinKvadrat(data) {
-    for(var i in winIndexKvadrat) {
-        var win = true;
-        for(var j in winIndexKvadrat[i]) {
-            var id = winIndexKvadrat[i][j];
-            var ind = data.indexOf(id);
-
-            if(ind == -1) {
-                win = false
-            }
-        }
-
-        if(win) return true;
-    }
-    return false;
-}
-
-function checkWinAlmaz(data) {
-    for(var i in winIndexKvadrat) {
-        var win = true;
-        for(var j in winIndexAlmaz[i]) {
-            var id = winIndexAlmaz[i][j];
-            var ind = data.indexOf(id);
-
-            if(ind == -1) {
-                win = false
-            }
-        }
-
-        if(win) return true;
-    }
-    return false;
-}
-
-function restart(text) {
-    var popup = document.getElementById('popup');
-    var message = popup.querySelector('.message');
-    message.innerHTML = text;
-    popup.style.display = 'block';
-}
-
-function resetCells() {
-    for(var i = 0; i < cell.length; i++) {
-        cell[i].innerHTML = '';
-        cell[i].classList.remove('active');
-        cell[i].classList.remove('cross');
-        cell[i].classList.remove('zero');
-    }
-}
 
 function closePopup() {
     var popup = document.getElementById('popup');
@@ -606,13 +459,211 @@ function closePopup() {
     updateStat();
 }
 
-function updateStat() {
-    document.getElementById('sX').innerHTML = stat.x;
-    document.getElementById('sO').innerHTML = stat.o;
-    document.getElementById('sD').innerHTML = stat.d;
-}
-
 function closeErrorPopup() {
     var errorPopup = document.getElementById('error-popup');
     errorPopup.style.display = 'none';
+}
+
+function cellClick() {
+  var data = [];
+
+  var isActive = this.classList.contains('active');
+
+  if (!this.innerHTML) {
+      if (player === 'x') {
+          this.classList.remove('zero');
+          this.classList.add('cross');
+      } else if (player === 'o') {
+          this.classList.remove('cross');
+          this.classList.add('zero');
+      }
+      this.innerHTML = player;
+
+      if (!isActive) {
+          this.classList.add('active');
+      }
+
+      if (!checkGameEnd()) {
+          player = player === 'x' ? 'o' : 'x';
+          currentPlayer.innerHTML = (player === 'x' ? 'X' : 'O');
+          currentPlayer.className = 'player-' + player;
+
+          if (player === 'o') {
+              makeComputerMove();
+          }
+      }
+  } else {
+      var errorPopup = document.getElementById('error-popup');
+      var errorMessage = errorPopup.querySelector('.message');
+      errorMessage.innerHTML = 'Ячейка занята';
+      errorPopup.style.display = 'block';
+  }
+}
+
+function makeComputerMove() {
+    var lastXCell = document.querySelector('.cell.cross');
+    var adjacentCells = getAdjacentCells(lastXCell);
+  
+    var emptyAdjacentCells = adjacentCells.filter((cell) => !cell.innerHTML);
+  
+    if (emptyAdjacentCells.length > 0) {
+      makeRandomMove(emptyAdjacentCells);
+    } else {
+      var allEmptyCells = Array.from(cell).filter((c) => !c.innerHTML);
+      makeRandomMove(allEmptyCells);
+    }
+  }
+  
+  function makeRandomMove(cells) {
+    if (cells.length > 0) {
+      var randomIndex = Math.floor(Math.random() * cells.length);
+      var computerCell = cells[randomIndex];
+      computerCell.click();
+    }
+  }
+  
+  function getAdjacentCells(cell) {
+    var cellPos = parseInt(cell.getAttribute('pos'));
+    var adjacentPos = [
+      cellPos - 10, cellPos + 10, 
+      cellPos - 1, cellPos + 1,   
+      cellPos - 9, cellPos - 11,  
+      cellPos + 9, cellPos + 11   
+    ];
+  
+    return adjacentPos
+      .filter(pos => pos > 0 && pos <= 100)  
+      .map(pos => document.querySelector(`.cell[pos="${pos}"]`));
+  }
+
+function checkGameEnd() {
+  var data = [];
+  for (var i = 0; i < cell.length; i++) {
+      data.push(cell[i].innerHTML);
+  }
+  if (checkWin(data)) {
+      stat[player] += 1;
+      restart("Вы собрали 5 в ряд. + 1 балл. Выйграл: " + (player === 'x' ? 'X' : 'O'));
+      return true;
+  }
+
+  if (checkWinKvadrat(data)) {
+    stat[player] += 2;
+    restart("Вы собрали фигуру 'Квадрат'. + 2 балла. Выйграл: " + (player === 'x' ? 'X' : 'O'));
+    return true;
+  }
+
+  if (checkWinAlmaz(data)) {
+        stat[player] += 4;
+        restart("Вы собрали фигуру 'Алмаз'. + 4 балла.Выйграл: " + (player === 'x' ? 'X' : 'O'));
+        return true;
+   }
+
+
+  var isDraw = true;
+  for (var i = 0; i < cell.length; i++) {
+      if (cell[i].innerHTML === '') {
+          isDraw = false;
+          break;
+      }
+  }
+
+  if (isDraw) {
+      stat.d += 1;
+      restart("Ничья");
+      return true;
+  }
+
+  return false;
+}
+
+function checkWin(data) {
+  for (var i = 0; i < winIndex.length; i++) {
+      var win = true;
+      for (var j = 0; j < winIndex[i].length; j++) {
+          var id = winIndex[i][j];
+          if (data[id - 1] !== player) {
+              win = false;
+              break;
+          }
+      }
+
+      if (win) {
+          return true;
+      }
+  }
+
+  return false;
+}
+
+function checkWinKvadrat(data) {
+    for (var i = 0; i < winIndexKvadrat.length; i++) {
+        var win = true;
+        for (var j = 0; j < winIndexKvadrat[i].length; j++) {
+            var id = winIndexKvadrat[i][j];
+            if (data[id - 1] !== player) {
+                win = false;
+                break;
+            }
+        }
+        if (win) {
+            return true;
+        }
+    }
+    return false;
+  }
+
+  function checkWinAlmaz(data) {
+    for (var i = 0; i < winIndexAlmaz.length; i++) {
+        var win = true;
+        for (var j = 0; j < winIndexAlmaz[i].length; j++) {
+            var id = winIndexAlmaz[i][j];
+            if (data[id - 1] !== player) {
+                win = false;
+                break;
+            }
+        }
+        if (win) {
+            return true;
+        }
+    }
+    return false;
+  }
+
+function restart(text) {
+  var popup = document.getElementById('popup');
+  var message = popup.querySelector('.message');
+  message.innerHTML = text;
+  popup.style.display = 'block';
+  updateStat();
+
+  player = 'x';
+  currentPlayer.innerHTML = 'Сейчас ходит: X';
+  currentPlayer.className = 'player-x';
+}
+
+function resetCells() {
+  for (var i = 0; i < cell.length; i++) {
+      cell[i].innerHTML = '';
+      cell[i].classList.remove('active');
+      cell[i].classList.remove('cross');
+      cell[i].classList.remove('zero');
+  }
+}
+
+function closePopup() {
+  var popup = document.getElementById('popup');
+  popup.style.display = 'none';
+  resetCells();
+}
+
+function updateStat() {
+  document.getElementById('sX').innerHTML = stat.x;
+  document.getElementById('sO').innerHTML = stat.o;
+  document.getElementById('sD').innerHTML = stat.d;
+}
+
+function closeErrorPopup() {
+  var errorPopup = document.getElementById('error-popup');
+  errorPopup.style.display = 'none';
 }
