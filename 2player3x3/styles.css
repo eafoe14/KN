@@ -23,15 +23,15 @@ p{
 }
 
 #area {
-    width: 307px;
+    width: 350px;
     margin: 0 auto;
     font-size: 0;
 }
 
 .cell {
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
+    width: 90px;
+    height: 90px;
+    line-height: 50px;
     text-align: center;
     display: inline-block;
     font-size: 26px;
