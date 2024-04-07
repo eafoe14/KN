@@ -44,6 +44,7 @@ p{
     vertical-align: middle;
     transition: background-color .1s, transform .1s;
 }
+
 .cell:hover {
     border: 2px ridge black;
     background-color: #fff;
