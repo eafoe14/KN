@@ -176,3 +176,23 @@ table {
 td {
     border: none;
 }
+
+@media (max-width:400px){
+    h1{
+        text-align: center;
+        font-family:'Courier New', Courier, monospace;
+        font-weight: bold;
+        font-size: 30px;
+        color: brown;
+        margin-top:0px;
+    }
+
+    p{
+        text-align: center;
+        font-family:'Courier New', Courier, monospace;
+        font-weight: bold;
+        font-size: 15px;
+        color: brown;
+        margin-top: -20px;
+    }
+}
