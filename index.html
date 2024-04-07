@@ -12,18 +12,71 @@
     <p>(выберите вариант игры)</p>
     <form>
         <div class="button-container">
-            <button class="first-button" type="button" onclick="btn_click()">
-                <img src="img/2player3x3.jpg">
-            </button>
-            <button class="second-button" type="button" onclick="btn_click1()">
-                <img src="img/1player3x3.jpg">
-            </button>
-            <button class="third-button" type="button" onclick="btn_click2()">
-                <img src="img/2player10x10.jpg">
-            </button>
-            <button class="fourth-button" type="button" onclick="btn_click3()">
-                <img src="img/1player10x10.jpg">
-            </button>
+            <div>
+                <button class="first-button" type="button" onclick="btn_click()">
+                    <img src="img/2player3x3.jpg">
+                </button>
+                <div class="game-card" onmouseover="showRules()" onmouseout="hideRules()">
+                    <div class="pravila_container">
+                        <img class="pravila__img" src="img/pravila.png" width="25" height="25">
+                    </div>
+                    <div id="rules" class="tooltip">
+                        <p>Правила игры:</p>
+                        <ul>
+                            <li>Необходимо собрать 3 в ряд</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="second-button" type="button" onclick="btn_click1()">
+                    <img src="img/1player3x3.jpg">
+                </button>
+                <div class="game-card" onmouseover="showRules()" onmouseout="hideRules()">
+                    <div class="pravila_container">
+                        <img class="pravila__img" src="img/pravila.png" width="25" height="25">
+                    </div>
+                    <div id="rules" class="tooltip">
+                        <p>Правила игры:</p>
+                        <ul>
+                            <li>Необходимо собрать 3 в ряд</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="third-button" type="button" onclick="btn_click2()">
+                    <img src="img/2player10x10.jpg">
+                </button>
+                <div class="game-card" onmouseover="showRules()" onmouseout="hideRules()">
+                    <div class="pravila_container">
+                        <img class="pravila__img" src="img/pravila.png" width="25" height="25">
+                    </div>
+                    <div id="rules" class="tooltip">
+                        <p>Правила игры:</p>
+                        <div class="pravila10">
+                            <p class="text">Победит тот, кто соберёт квадрат, алмаз или 5 в ряд</p>
+                            <div class="imgP"><img src="img/kvadrat.jpg"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="fourth-button" type="button" onclick="btn_click3()">
+                    <img src="img/1player10x10.jpg">
+                </button>
+                <div class="game-card" onmouseover="showRules()" onmouseout="hideRules()">
+                    <div class="pravila_container">
+                        <img class="pravila__img" src="img/pravila.png" width="25" height="25">
+                    </div>
+                    <div id="rules" class="tooltip">
+                        <p>Правила игры:</p>
+                        <ul>
+                            <li>Необходимо собрать 3 в ряд</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </body>

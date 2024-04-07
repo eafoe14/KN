@@ -13,3 +13,4 @@ function btn_click2() {
 function btn_click3() {
     window.location.href = '1player10x10/index.html';
 }
+
