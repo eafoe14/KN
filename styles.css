@@ -20,11 +20,10 @@ p{
 }
 
 .button-container{
-    margin-left: 100px;
-    margin-right: 100px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
+    margin: 100px;
 }
 
 .first-button{
@@ -70,4 +69,23 @@ p{
 button:hover{
     transform: scale(1.1);
     border: 2px solid black;
+}
+
+@media (max-width:400px){
+    h1{
+        text-align: center;
+        font-family:'Courier New', Courier, monospace;
+        font-weight: bold;
+        font-size: 30px;
+        color: brown;
+    }
+
+    p{
+        text-align: center;
+        font-family:'Courier New', Courier, monospace;
+        font-weight: bold;
+        font-size: 15px;
+        color: brown;
+        margin-top: -20px;
+    }
 }
