@@ -28,16 +28,14 @@ p{
 }
 
 #area {
-    width: 595px;
+    width: 520px;
     margin: 0 auto;
     font-size: 0;
-    border: 1px solid black;
 }
 
 .cell {
-    width: 50px;
-    height: 50px;
-    line-height: 35px;
+    width: 49px;
+    height: 49px;
     text-align: center;
     display: inline-block;
     font-size: 26px;
@@ -46,7 +44,6 @@ p{
     vertical-align: middle;
     transition: background-color .1s, transform .1s;
 }
-
 .cell:hover {
     border: 2px ridge black;
     background-color: #fff;

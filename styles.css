@@ -76,11 +76,6 @@ button:hover{
     font-size: 14px;
 }
 
-.pravila10{
-    display: flex;
-    flex-direction:column;
-}
-
 .pravila__container{
     width: 25px;
     height: 25px;
@@ -99,10 +94,13 @@ button:hover{
 .tooltip {
     visibility: hidden;
     width: 150px;
-    background-color: #fff;
-    color: #333;
+    background-color: white;
+    color: black;
     text-align: left;
-    padding: 20px;
+    padding-top: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
     border-radius: 5px;
     position: absolute;
     z-index: 1;
